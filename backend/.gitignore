@@ -1,0 +1,57 @@
+# Node modules (dependencies)
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Log files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build or distribution folders
+dist/
+build/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like nyc or jest
+coverage/
+
+# TypeScript build output (if you use TS)
+*.tsbuildinfo
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor/IDE folders
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
