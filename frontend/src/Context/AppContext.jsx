@@ -34,7 +34,6 @@ export const AppProvider = ({ children }) => {
             }, [])
 
             setMessages(mes)
-            console.log("data is sete")
         }
     }
 

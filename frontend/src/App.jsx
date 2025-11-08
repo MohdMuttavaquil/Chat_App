@@ -1,10 +1,14 @@
+import { useEffect } from "react"
 import Home from "./components/Home/Home"
 import Navbar from "./components/Navbar"
 import Singin from "./components/Singin/Singin"
 import { Routes, Route } from "react-router-dom"
 
-
 function App() {
+
+  useEffect(()=>{
+    alert("please login for better experiences")    
+  }, [])
 
   return (
     <>

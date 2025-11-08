@@ -1,6 +1,6 @@
 import { userModle } from "../Modle/userSchema.js"
 
-const users = {}
+const userToSocketId = new Map()
 let loginUser = ''
 
 export const socketHandler = (io, socket) => {
@@ -8,10 +8,11 @@ export const socketHandler = (io, socket) => {
     // user login
     socket.on("login", async (userName) => {
         loginUser = userName
-        users[userName] = socket.id
-        console.log("user id = ", users)
+       userToSocketId.set(userName, socket.id)
+        console.log(userToSocketId)
     })
 
+    // For message 
     socket.on("send_message", async ({ toUserName, message, sendUser }) => {
         const targetSocketId = users[toUserName];
 
@@ -32,6 +33,32 @@ export const socketHandler = (io, socket) => {
 
     })
 
+    // For video call
+    socket.on("join-room", (roomId)=>{
+        socket.join(roomId)
+        socket.id = userToSocketId.get(loginUser)
+        socket.to(roomId).emit("peer-join", socket.id)
+    })
+
+    socket.on("offer", ({ roomId, desc }) => {
+    socket.to(roomId).emit("offer", { from: loginUser, desc });
+  });
+
+  socket.on("answer", ({ roomId, desc }) => {
+    socket.to(roomId).emit("answer", { from: loginUser, desc });
+  });
+
+  socket.on("ice-candidate", ({ roomId, candidate }) => {
+    socket.to(roomId).emit("ice-candidate", { from: loginUser, candidate });
+  });
+
+  socket.on("leave", (roomId) => {
+    socket.leave(roomId);
+    socket.to(roomId).emit("peer-left", loginUser);
+  });
+
+
+   // for disconnect user 
     socket.on("disconnect", async () => {
       
         await userModle.findOneAndUpdate(
