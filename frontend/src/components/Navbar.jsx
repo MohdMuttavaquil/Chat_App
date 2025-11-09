@@ -69,7 +69,7 @@ const Navbar = () => {
                 <input onChange={handleChange} value={search} className='outline-none pt-1 py-1 pr-20 pl-2 border-b-4 border-amber-300 rounded-lg bg-white md:w-[20rem] ' type='text' placeholder='Enter Username' required />
 
                 <button onClick={() => findUser()} className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white'>
-                  Searvh
+                  Search
                 </button>
               </div>) :
 
@@ -126,7 +126,7 @@ const Navbar = () => {
                 <input onChange={handleChange} value={search} className='outline-none pt-1 py-1 pr-20 pl-2 border-b-4 border-amber-300 rounded-lg bg-white md:w-[20rem] ' type='text' placeholder='Enter Username' required />
 
                 <button onClick={() => findUser()} className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white'>
-                  Searvh
+                  Search
                 </button>
               </div>) :
 

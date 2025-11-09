@@ -58,16 +58,18 @@ const Home = () => {
       {/* for axisting user */}
       {token ? <div >
 
+        <div className='mb-8 text-red-400 text-lg text-center sm:w-[50%] mx-auto'>If you login before. Please login again for better experiences, otherwise you face some error</div>
+
         <div className='flex md:flex-row justify-evenly flex-col'>
 
           <div id='message' className={`${show ? "hidden md:flex flex-col md:h-[30rem] max-h-screen min-h-[60vh] md:w-[40%] w-[96%] mx-auto" : "flex flex-col md:h-[30rem] max-h-screen min-h-[60vh] md:w-[40%] w-[96%] mx-auto"}`}>
 
             {/* For New messages */}
             <div className='h-[3rem] text-2xl bg-[#446E6B] text-white flex mb-1 items-center font-semibold rounded'>
-              <p className='pl-4'>New Messages</p>
+              <p className='pl-4'>Recently Chat</p>
             </div>
 
-            <ul className='overflow-y-scroll'>
+            <ul className='overflow-y-scroll box'>
               {messages && messages.map((i, index) => <li key={index} onClick={() => chat(i)} className='h-[3rem] text-xl mx-1 bg-[#F0F0F0] px-2 cursor-pointer text-gray-700 border-b-4 border-gray-600 items-center flex gap-4 rounded sm:pl-4 '>
                 <p className='w-full'>{i.from}</p>
               </li>)}
@@ -75,7 +77,7 @@ const Home = () => {
 
             {/*For contect */}
             <div className='mt-4 h-[3rem] text-2xl bg-[#446E6B] text-white flex mb-1 items-center font-semibold rounded'><p className='pl-4'>Contects</p></div>
-            <ul className='overflow-y-scroll'>
+            <ul className='overflow-y-scroll box'>
 
               {userContect && userContect.map((i, index) => <li key={index} onClick={() => newChat(i)} className='h-[3rem] text-xl mx-1 bg-[#F0F0F0] px-2 cursor-pointer text-gray-700 border-b-4 border-gray-600 items-center flex gap-4 rounded sm:pl-4'>
                 <img src='./profile.png' className='h-6' />

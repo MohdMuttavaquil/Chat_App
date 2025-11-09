@@ -8,13 +8,14 @@ export const socketHandler = (io, socket) => {
     // user login
     socket.on("login", async (userName) => {
         loginUser = userName
+        console.log(loginUser)
        userToSocketId.set(userName, socket.id)
         console.log(userToSocketId)
     })
 
     // For message 
     socket.on("send_message", async ({ toUserName, message, sendUser }) => {
-        const targetSocketId = users[toUserName];
+        const targetSocketId = userToSocketId.get(toUserName);
 
         if (targetSocketId) {
             io.to(targetSocketId).emit("receive_message", {
@@ -33,30 +34,6 @@ export const socketHandler = (io, socket) => {
 
     })
 
-    // For video call
-    socket.on("join-room", (roomId)=>{
-        socket.join(roomId)
-        socket.id = userToSocketId.get(loginUser)
-        socket.to(roomId).emit("peer-join", socket.id)
-    })
-
-    socket.on("offer", ({ roomId, desc }) => {
-    socket.to(roomId).emit("offer", { from: loginUser, desc });
-  });
-
-  socket.on("answer", ({ roomId, desc }) => {
-    socket.to(roomId).emit("answer", { from: loginUser, desc });
-  });
-
-  socket.on("ice-candidate", ({ roomId, candidate }) => {
-    socket.to(roomId).emit("ice-candidate", { from: loginUser, candidate });
-  });
-
-  socket.on("leave", (roomId) => {
-    socket.leave(roomId);
-    socket.to(roomId).emit("peer-left", loginUser);
-  });
-
 
    // for disconnect user 
     socket.on("disconnect", async () => {
@@ -67,7 +44,7 @@ export const socketHandler = (io, socket) => {
             { new: true }
         );
 
-        console.log("user disconnected")
+        console.log(`${loginUser} disconnected`)
     })
 
 }
