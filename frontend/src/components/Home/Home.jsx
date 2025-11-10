@@ -8,6 +8,7 @@ const Home = () => {
   const { token, userContect, setMessages, userName, messages } = useContext(AppContext)
   const [userData, setUserDate] = useState({})
   const [show, setShow] = useState(false)
+  const [ insertaction, setInsertaction ] = useState(true)
 
   const chat = (data) => {
     setShow(true)
@@ -58,7 +59,12 @@ const Home = () => {
       {/* for axisting user */}
       {token ? <div >
 
-        <div className='mb-8 text-red-400 text-lg text-center sm:w-[50%] mx-auto'>If you login before. Please login again for better experiences, otherwise you face some error</div>
+      {/* new user instraction */}
+       {insertaction && <div className='mb-8 text-red-400 text-lg text-center sm:w-[50%] mx-auto'>If you login before. Please login again for better experiences, otherwise you face some error
+        <p className='text-white'>Search for <b>jone</b> as a username and add connect to jone, this a dummy user login in another tab <b>username: jone  password: 12345678</b> and use this</p>
+
+        <button onClick={()=> setInsertaction(false)} className='px-3 py-2 rounded-lg hover:rounded-2xl text-white cursor-pointer bg-[#446E6B] left-0'>Ok</button>
+        </div> }
 
         <div className='flex md:flex-row justify-evenly flex-col'>
 

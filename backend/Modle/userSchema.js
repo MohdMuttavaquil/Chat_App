@@ -8,4 +8,4 @@ const userSchema = mongoose.Schema({
     messages: {type: [Object], default:[]}
 })
 
-export const userModle = mongoose.model.users || mongoose.model("users", userSchema)
+export const userModle = mongoose.model.Users || mongoose.model("Users", userSchema)
