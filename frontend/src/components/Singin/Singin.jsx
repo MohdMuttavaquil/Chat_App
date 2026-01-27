@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react'
 import { AppContext } from '../../Context/AppContext'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { socket } from '../../socket'
+import { loginApi, singinApi } from '../../Api/user.api'
 
 const Singin = () => {
 
-  const { singIn, setSingIn, url, setToken, setUserName, setUserContect } = useContext(AppContext)
+  const { singIn, setCount, setSingIn, setUserName, setToken, setUserContect, setMessages } = useContext(AppContext)
   const navigate = useNavigate()
 
   const [data, setData] = useState({
@@ -21,39 +21,42 @@ const Singin = () => {
     setData(prev => ({ ...prev, [name]: value }))
   }
 
-  // fatch data from database
-  const getData = (res)=>{
-       if (res.data.success) {
-        localStorage.setItem("token", res.data.token)
-        setToken(true)
-        setUserName(res.data.userData)
-        setUserContect(res.data.userContect)
+
+  const offlineMesg = (data) => {
+
+    const mes = data.reduce((acc, curr) => {
+      const existing = acc.find(item => item.from === curr.from)
+      if (existing) {
+        existing.messages.push(curr.message)
       } else {
-        alert(res.data.massege)
+        acc.push({ from: curr.from, messages: [curr.message] })
       }
+      return acc
+    }, [])
+
+    setMessages(mes)
+  }
+
+  // fatch data from database
+  const userData = (res) => {
+    sessionStorage.setItem("token", res.token)
+    setToken(true)
+    setUserName(res.userData)
+    setUserContect(res.userContect)
+    offlineMesg(res.messages)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setData({ email: "", userName: "", password: "" })
 
-    if (singIn) {
-      const res = await axios.post(`${url}/api/user/singin`, data)
-     getData(res)
-    } else {
-      const res = await axios.post(`${url}/api/user/login`, data)
-      getData(res)
-    }
+    const ressult = singIn ? await singinApi(data) : await loginApi(data)
+    if (!ressult) return
+    userData(ressult)
 
     socket.connect()
     socket.emit("login", data.userName)
     console.log("user connected")
-
-    setData({
-      email: "",
-      userName: "",
-      password: ""
-    })
-
     navigate("/")
   }
 

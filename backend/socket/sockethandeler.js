@@ -1,16 +1,15 @@
 import { userModle } from "../Modle/userSchema.js"
 
 const userToSocketId = new Map()
-let loginUser = ''
 
 export const socketHandler = (io, socket) => {
+
+    let loginUser = ''
 
     // user login
     socket.on("login", async (userName) => {
         loginUser = userName
-        console.log(loginUser)
-       userToSocketId.set(userName, socket.id)
-        console.log(userToSocketId)
+        userToSocketId.set(userName, socket.id)
     })
 
     // For message 
@@ -38,13 +37,14 @@ export const socketHandler = (io, socket) => {
    // for disconnect user 
     socket.on("disconnect", async () => {
       
+        userToSocketId.delete(loginUser)
+        
         await userModle.findOneAndUpdate(
             { userName: loginUser },
             { $set: { messages: [] } },
             { new: true }
         );
 
-        console.log(`${loginUser} disconnected`)
     })
 
 }

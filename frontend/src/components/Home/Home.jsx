@@ -5,66 +5,59 @@ import { socket } from '../../socket'
 
 const Home = () => {
 
-  const { token, userContect, setMessages, userName, messages } = useContext(AppContext)
+  const { token, userContect, setMessages, messages } = useContext(AppContext)
   const [userData, setUserDate] = useState({})
   const [show, setShow] = useState(false)
-  const [ insertaction, setInsertaction ] = useState(true)
 
+  
   const chat = (data) => {
     setShow(true)
     setUserDate(data)
+
+    const user = messages.find(item => item.from === data.from)
+    if (user) {
+      user.new = false
+    }
   }
 
   const newChat = (a) => {
-    console.log(a)
     const data = { from: a, messages: "" }
     chat(data)
   }
 
+  // For new messages 
   useEffect(() => {
+    if (!token) return
 
-    if (!userName) {
-      return
-    }
-
-    // connect to socket and receive message
-    socket.connect()
-    socket.on("receive_message", ({ from, message }) => {
-
+    const handleMas = ({ from, message }) => {
       setMessages(prev => {
         const updated = [...prev];
         const existing = updated.find(item => item.from === from);
 
         if (existing) {
-          existing.messages.push(message);
+          existing.messages.push(message)
+          existing.new = true
         } else {
-          updated.push({ from, messages: [message] });
+          updated.push({ from, messages: [message], new: true });
         }
 
         return updated;
       });
-    })
-
-    // disconnect socket
-    return () => {
-      socket.off("receive_message")
-      socket.off("disconnect")
     }
-  }, [userName])
 
+    socket.on("receive_message", handleMas)
+
+    return () => {
+      socket.off("receive_message", handleMas)
+    }
+
+  }, [token])
 
   return (
     <div className='md:w-[80%] mx-auto my-[4rem] text-white'>
 
       {/* for axisting user */}
       {token ? <div >
-
-      {/* new user instraction */}
-       {insertaction && <div className='mb-8 text-red-400 text-lg text-center sm:w-[50%] mx-auto'>If you login before. Please login again for better experiences, otherwise you face some error
-        <p className='text-white'>Search for <b>jone</b> as a username and add connect to jone, this a dummy user login in another tab <b>username: jone  password: 12345678</b> and use this</p>
-
-        <button onClick={()=> setInsertaction(false)} className='px-3 py-2 rounded-lg hover:rounded-2xl text-white cursor-pointer bg-[#446E6B] left-0'>Ok</button>
-        </div> }
 
         <div className='flex md:flex-row justify-evenly flex-col'>
 
@@ -76,8 +69,10 @@ const Home = () => {
             </div>
 
             <ul className='overflow-y-scroll box'>
-              {messages && messages.map((i, index) => <li key={index} onClick={() => chat(i)} className='h-[3rem] text-xl mx-1 bg-[#F0F0F0] px-2 cursor-pointer text-gray-700 border-b-4 border-gray-600 items-center flex gap-4 rounded sm:pl-4 '>
-                <p className='w-full'>{i.from}</p>
+              {messages && messages.map((i, index) => <li key={index} onClick={() => chat(i)} className='h-[3rem] text-xl mx-1 bg-[#F0F0F0] px-2 cursor-pointer text-gray-700 border-b-4 border-gray-600 items-center flex  justify-between rounded sm:pl-4 '>
+            
+                <p>{i.from}</p>
+                <p className={`${i.new ? "" : "hidden"} bg-[#446E6B] text-white text-sm px-1 py-0.5 rounded-full`}>new</p>
               </li>)}
             </ul>
 

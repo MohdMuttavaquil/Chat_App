@@ -7,14 +7,14 @@ const searchUser = async (req, res) => {
         const exist = await userModle.findOne({ userName: search })
 
         if (!exist) {
-          return  res.json({ success: false, massege: "user not exist" })
+          return  res.json({ success: false, message: "user not exist" })
         }
 
         const foundUser = exist.userName
         res.json({ success: true, foundUser })
     } catch (error) {
         console.log(error)
-        res.json({ success: true, massege: "server error" })
+        res.json({ success: true, message: "server error" })
     }
 
 }
@@ -28,7 +28,7 @@ const addUser = async (req, res) => {
         const reciveUser = await userModle.findOne({ userName: foundUser })
 
        if (sendUser.friend.includes(foundUser)) {
-       return res.json({success: false, massege:"user already add"})
+       return res.json({success: false, message:"user already add"})
        }
 
         sendUser.friend.push(foundUser)
@@ -41,7 +41,7 @@ const addUser = async (req, res) => {
         res.json({success: true, userContect})
     } catch (error) {
         console.log(error)
-        res.json({ success: false, massege: "server error" })
+        res.json({ success: false, message: "server error" })
     }
 }
 

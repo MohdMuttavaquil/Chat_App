@@ -16,15 +16,15 @@ const singin = async (req, res) => {
 
       const exist = await userModle.findOne({ userName })
       if (exist) {
-         return res.json({ success: false, massege: "chose unique username" })
+         return res.json({ success: false, message: "chose unique username" })
       }
 
       if (!password > 8) {
-         res.json({ success: false, massege: "enter string password" })
+         res.json({ success: false, message: "enter strong password" })
       }
 
       if (!validator.isEmail(email)) {
-         return res.json({ success: false, massege: "enter valid email" })
+         return res.json({ success: false, message: "enter valid email" })
       }
 
       const salt = await bcrypt.genSalt(10)
@@ -36,11 +36,13 @@ const singin = async (req, res) => {
 
       const userData = user.userName
       const userContect = user.friend
-      res.json({ success: true, token, userData, userContect })
+      const messages = user.messages
+
+      res.json({ success: true, token, userData, userContect, messages })
 
    } catch (error) {
       console.log(error)
-      res.json({ success: false, massege: "some server error" })
+      res.json({ success: false, message: "some server error" })
    }
 }
 
@@ -55,22 +57,23 @@ const login = async (req, res) => {
          const isUser = await bcrypt.compare(password, exist.password)
 
          if (!isUser) {
-            return res.json({ success: false, massege: "userName and password dose not match" })
+            return res.json({ success: false, message: "userName and password dose not match" })
          }
          const token = createToken(exist._id)
 
          const userData = exist.userName
          const userContect = exist.friend
-        
-         res.json({ success: true, token, userData, userContect })
+         const messages = exist.messages
+
+         res.json({ success: true, token, userData, userContect, messages })
       }
 
       if (!exist) {
-         res.json({ success: false, massege: 'user dose not exist' })
+         res.json({ success: false, message: 'user dose not exist' })
       }
    } catch (error) {
       console.log(error)
-      res.json({ success: false, massege: "some error" })
+      res.json({ success: false, message: "some error" })
    }
 }
 
@@ -86,7 +89,7 @@ const userInfo = async (req, res) => {
       res.json({ success: true, userData, userContect, messages })
    } catch (error) {
       console.log(error)
-      res.json({ success: true, massege: "server error" })
+      res.json({ success: true, message: "server error" })
    }
 
 }

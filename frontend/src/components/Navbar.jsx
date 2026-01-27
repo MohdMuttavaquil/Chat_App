@@ -1,20 +1,20 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AppContext } from '../Context/AppContext'
-import axios from 'axios'
 import { socket } from '../socket'
+import { addUserApi, findUserApi } from '../Api/user.api'
 
 const Navbar = () => {
 
-  const { setSingIn, setToken, token, userName, url, setUserContect, setMessages } = useContext(AppContext)
+  const { setSingIn, setToken, token, userName, setUserContect, setMessages } = useContext(AppContext)
   const [search, setsearch] = useState("")
   const [foundUser, setfoundUser] = useState("")
-  const userToken = localStorage.getItem("token")
+  const userToken = sessionStorage.getItem("token")
 
   const logout = () => {
     socket.disconnect()
     setMessages("")
-    localStorage.removeItem("token")
+    sessionStorage.clear()
     setToken(false)
   }
 
@@ -23,26 +23,14 @@ const Navbar = () => {
   }
 
   const findUser = async () => {
-    const res = await axios.post(`${url}/api/contect/search`, { search })
-    console.log(res.data)
-    if (res.data.success) {
-       setfoundUser(res.data.foundUser)   
-    } else{
-      alert(res.data.massege)
-    }
-   
+    const result = await findUserApi(search)
+    setfoundUser(result)
     setsearch("")
   }
 
-  const addUser = async () =>{
-    const res = await axios.post(`${url}/api/contect/add`,  {foundUser}, {headers:{userToken }})
-     if (!res.data.success) {
-      alert(res.data.massege)
-    } else{
-       setUserContect(res.data.userContect)
-    }
-   
-   
+  const addUser = async () => {
+    const result = await addUserApi(foundUser, userToken)
+    setUserContect(result)
     setfoundUser("")
   }
 
@@ -51,39 +39,39 @@ const Navbar = () => {
 
       <div className='flex h-[5rem] px-2 justify-between items-center z-50'>
 
-       {/* logo */}
+        {/* logo */}
         <div className='text-white font-semibold text-[2rem]'>LOGO</div>
 
         <div className='flex items-center gap-5'>
-         
+
           {token ? <div className='flex gap-[1.5rem]'>
             {/*for logon user*/}
 
             <div className='flex gap-1'>
 
 
-             {foundUser ==="" ?(
-              <div className='sm:flex hidden gap-2'>
-                {/* for user search */}
-            
-                <input onChange={handleChange} value={search} className='outline-none pt-1 py-1 pr-20 pl-2 border-b-4 border-amber-300 rounded-lg bg-white md:w-[20rem] ' type='text' placeholder='Enter Username' required />
+              {foundUser === "" ? (
+                <div className='sm:flex hidden gap-2'>
+                  {/* for user search */}
 
-                <button onClick={() => findUser()} className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white'>
-                  Search
-                </button>
-              </div>) :
+                  <input onChange={handleChange} value={search} className='outline-none pt-1 py-1 pr-20 pl-2 border-b-4 border-amber-300 rounded-lg bg-white md:w-[20rem] ' type='text' placeholder='Enter Username' required />
 
-             ( <div className='sm:flex hidden gap-1'>
+                  <button onClick={() => findUser()} className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white'>
+                    Search
+                  </button>
+                </div>) :
 
-                {/* Add to contect */}
+                (<div className='sm:flex hidden gap-1'>
 
-                <p className='text-xl'>{foundUser}</p>
-                <button className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white' onClick={() => addUser()}>Add</button>
+                  {/* Add to contect */}
 
-              </div> )}
+                  <p className='text-xl'>{foundUser}</p>
+                  <button className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white' onClick={() => addUser()}>Add</button>
+
+                </div>)}
             </div>
 
-             {/* user profile and logout button */}
+            {/* user profile and logout button */}
 
             <div id='Profile' className='flex gap-2'>
               <img src='./profile.png' className='h-[2rem]' />
@@ -113,34 +101,34 @@ const Navbar = () => {
 
       </div>
 
-        {/* on moblie */}
+      {/* on moblie */}
 
 
-        {token ? <div>
+      {token ? <div>
 
-          {foundUser ==="" ?(
-            
-              <div className='flex sm:hidden gap-2 px-2'>
-                {/* for user search */}
-            
-                <input onChange={handleChange} value={search} className='outline-none pt-1 py-1 pr-20 pl-2 border-b-4 border-amber-300 rounded-lg bg-white md:w-[20rem] ' type='text' placeholder='Enter Username' required />
+        {foundUser === "" ? (
 
-                <button onClick={() => findUser()} className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white'>
-                  Search
-                </button>
-              </div>) :
+          <div className='flex sm:hidden gap-2 px-2'>
+            {/* for user search */}
 
-             ( <div className='flex md:hidden gap-1 justify-center'>
+            <input onChange={handleChange} value={search} className='outline-none pt-1 py-1 pr-20 pl-2 border-b-4 border-amber-300 rounded-lg bg-white md:w-[20rem] ' type='text' placeholder='Enter Username' required />
 
-                {/* Add to contect */}
+            <button onClick={() => findUser()} className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white'>
+              Search
+            </button>
+          </div>) :
 
-                <p className='text-xl'>{foundUser}</p>
-                <button className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white' onClick={() => addUser()}>Add</button>
+          (<div className='flex md:hidden gap-1 justify-center'>
 
-              </div> )}
+            {/* Add to contect */}
 
-              </div>
-              :<></>}
+            <p className='text-xl'>{foundUser}</p>
+            <button className='px-3 py-1 rounded-lg bg-[#446E6B] hover:bg-white hover:text-gray-700 duration-500 text-white border-2 cursor-pointer border-white' onClick={() => addUser()}>Add</button>
+
+          </div>)}
+
+      </div>
+        : <></>}
 
     </nav>
   )
