@@ -5,7 +5,7 @@ export const AppContext = createContext()
 export const AppProvider = ({ children }) => {
 
     const [singIn, setSingIn] = useState(false)
-    const url = "http://localhost:3000"
+    const url = "https://chat-app-jkuj.onrender.com"
     const [token, setToken] = useState(false)
     const [userName, setUserName] = useState("")
     const [userContect, setUserContect] = useState([])

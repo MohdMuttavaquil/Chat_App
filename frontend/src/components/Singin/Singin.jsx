@@ -7,7 +7,7 @@ import { loginApi, singinApi } from '../../Api/user.api'
 
 const Singin = () => {
 
-  const { singIn, setCount, setSingIn, setUserName, setToken, setUserContect, setMessages } = useContext(AppContext)
+  const { singIn, setSingIn, setUserName, setToken, setUserContect, setMessages } = useContext(AppContext)
   const navigate = useNavigate()
 
   const [data, setData] = useState({
