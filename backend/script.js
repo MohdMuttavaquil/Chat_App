@@ -15,7 +15,8 @@ const PORT  = 3000
 const server = createServer(app)
 const io = new Server(server, {
   cors:{
-    rigin: "http://localhost:5173" || "https://chat-app-1-h1qb.onrender.com" , 
+    rigin: [ "http://localhost:5173",
+   "https://chat-app-1-h1qb.onrender.com" ],
     methods: ["GET", "POST"],
   }
 })
