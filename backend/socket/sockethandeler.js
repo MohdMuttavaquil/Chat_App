@@ -5,7 +5,6 @@ const userToSocketId = new Map()
 export const socketHandler = (io, socket) => {
 
     let loginUser = ''
-    console.log(userToSocketId)
 
     // user login
     socket.on("login", async (userName) => {
