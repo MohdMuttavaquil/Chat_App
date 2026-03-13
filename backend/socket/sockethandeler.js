@@ -11,7 +11,7 @@ export const socketHandler = (io, socket) => {
         loginUser = userName
         userToSocketId.set(userName, socket.id)
     })
-
+console.log(userToSocketId)
     // For message 
     socket.on("send_message", async ({ toUserName, message, sendUser }) => {
         const targetSocketId = userToSocketId.get(toUserName);
@@ -44,7 +44,7 @@ export const socketHandler = (io, socket) => {
             { $set: { messages: [] } },
             { new: true }
         );
-
+console.log(loginUser, "dissconnected", userToSocketId)
     })
 
 }
