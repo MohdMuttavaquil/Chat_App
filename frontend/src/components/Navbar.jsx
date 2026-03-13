@@ -12,10 +12,13 @@ const Navbar = () => {
   const userToken = sessionStorage.getItem("token")
 
   const logout = () => {
-    socket.disconnect()
-    setMessages("")
-    sessionStorage.clear()
-    setToken(false)
+    if (socket.connected) {
+      socket.disconnect()
+      setMessages("")
+      sessionStorage.clear()
+      setToken(false)
+    }
+
   }
 
   const handleChange = (e) => {

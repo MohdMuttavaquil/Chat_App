@@ -56,8 +56,9 @@ const Singin = () => {
 
     if (!socket.connected) {
       socket.connect()
+      socket.emit("login", data.userName)
     }
-    socket.emit("login", data.userName)
+  
     console.log("user connected")
 
     setData({ email: "", userName: "", password: "" })
