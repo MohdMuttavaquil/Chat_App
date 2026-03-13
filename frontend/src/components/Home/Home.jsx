@@ -58,7 +58,7 @@ const Home = () => {
 
   return (
     <div className='md:w-[80%] mx-auto my-[4rem] text-white'>
-      <p>is hear {userto}</p>
+      <p>is hear {userto && userto}</p>
 
       {/* for axisting user */}
       {token ? <div >
