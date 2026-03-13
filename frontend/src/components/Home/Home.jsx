@@ -9,6 +9,9 @@ const Home = () => {
   const [userData, setUserDate] = useState({})
   const [show, setShow] = useState(false)
 
+  useEffect(()=>{
+    const userto = sessionStorage.getItem("token")
+  },[token])
   
   const chat = (data) => {
     setShow(true)
@@ -55,6 +58,7 @@ const Home = () => {
 
   return (
     <div className='md:w-[80%] mx-auto my-[4rem] text-white'>
+      <p>is hear {userto}</p>
 
       {/* for axisting user */}
       {token ? <div >
