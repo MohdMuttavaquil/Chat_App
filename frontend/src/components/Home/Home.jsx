@@ -8,9 +8,10 @@ const Home = () => {
   const { token, userContect, setMessages, messages } = useContext(AppContext)
   const [userData, setUserDate] = useState({})
   const [show, setShow] = useState(false)
+  const [userto, setuserto] = useState('')
 
   useEffect(()=>{
-    const userto = sessionStorage.getItem("token")
+    setuserto(sessionStorage.getItem("token"))
   },[token])
   
   const chat = (data) => {
