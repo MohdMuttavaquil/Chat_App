@@ -49,15 +49,18 @@ const Singin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setData({ email: "", userName: "", password: "" })
 
     const ressult = singIn ? await singinApi(data) : await loginApi(data)
     if (!ressult) return
     userData(ressult)
 
-    socket.connect()
+    if (!socket.connected) {
+      socket.connect()
+    }
     socket.emit("login", data.userName)
     console.log("user connected")
+
+    setData({ email: "", userName: "", password: "" })
     navigate("/")
   }
 
