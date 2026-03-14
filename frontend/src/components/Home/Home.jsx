@@ -8,7 +8,12 @@ const Home = () => {
   const { token, userContect, setMessages, messages } = useContext(AppContext)
   const [userData, setUserDate] = useState({})
   const [show, setShow] = useState(false)
-  
+  const [ count, setcount ] = useState(0)
+
+  useEffect(()=>{
+    setcount(count+1)
+  },[])
+
   const chat = (data) => {
     setShow(true)
     setUserDate(data)
@@ -54,7 +59,7 @@ const Home = () => {
 
   return (
     <div className='md:w-[80%] mx-auto my-[4rem] text-white'>
-
+<p>{count}</p>
       {/* for axisting user */}
       {token ? <div >
 
