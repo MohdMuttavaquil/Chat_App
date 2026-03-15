@@ -13,7 +13,9 @@ const Navbar = () => {
 
   const logout = () => {
     if (socket.connected) {
+      console.log("dissconnected req send by user")
       socket.disconnect()
+      console.log("user disscionnected")
       setMessages("")
       sessionStorage.clear()
       setToken(false)

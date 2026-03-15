@@ -55,11 +55,11 @@ const Singin = () => {
     userData(ressult)
 
     if (!socket.connected) {
-      socket.connect()
+      console.log("connection req send by user")
+      socket.connect()  
       socket.emit("login", data.userName)
+       console.log("user connected")
     }
-  
-    console.log("user connected")
 
     setData({ email: "", userName: "", password: "" })
     navigate("/")
