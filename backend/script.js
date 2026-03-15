@@ -18,7 +18,9 @@ const io = new Server(server, {
     rigin: [ "http://localhost:5173",
    "https://chat-app-1-h1qb.onrender.com" ],
     methods: ["GET", "POST"],
-  }
+  },
+  pingTimeout: 60000,
+  pingInterval: 25000
 })
 
 // Database connaction
