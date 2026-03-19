@@ -4,7 +4,7 @@ export const AppContext = createContext()
 
 export const AppProvider = ({ children }) => {
 
-    const url = "https://chat-app-jkuj.onrender.com"
+    const url = "https://api2.stylevibe.fun/"
     // const url = "http://localhost:3000/"
 
     const [singIn, setSingIn] = useState(false)
