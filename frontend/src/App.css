@@ -1,3 +1,8 @@
 .box::-webkit-scrollbar {
     display: none;
 }
+
+.logo {
+    font-family: 'Pacifico', cursive;
+    letter-spacing: 0.5px;
+}

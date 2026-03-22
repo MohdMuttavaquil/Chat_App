@@ -40,7 +40,7 @@ const Chat = ({ userData, setShow }) => {
   return (
     <div>
 
-      <div className="bg-[#446E6B] text-white md:h-[30rem] max-h-screen min-h-[60vh] flex-col rounded-xl relative">
+      <div className="bg-[#446E6B] text-white md:h-[30rem] h-[80vh] md:min-h-[60vh] flex-col rounded-xl relative">
 
         <div className='flex bg-gray-600 h-[3rem] items-center rounded-xl justify-between '>
 
@@ -54,7 +54,7 @@ const Chat = ({ userData, setShow }) => {
 
         </div>
 
-        <div className='h-[80%] w-full overflow-auto sm:pl-4 px-2 box'>
+        <div className='h-[80%] w-full overflow-scroll sm:pl-4 px-2 box'>
           {userData.messages && userData.messages.map((i, index) => <div key={index}>
             <p className='rounded-2xl pl-3 pr-4 inline-block py-1 my-1 bg-[#243736]'>{i}</p>
           </div>)}

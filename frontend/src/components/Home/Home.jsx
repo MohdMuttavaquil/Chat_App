@@ -53,7 +53,7 @@ const Home = () => {
   }, [token])
 
   return (
-    <div className='md:w-[80%] mx-auto my-[4rem] text-white'>
+    <div className='md:w-[80%] mx-auto md:my-[4rem] my-3 text-white'>
 
       {/* for axisting user */}
       {token ? <div >
@@ -63,7 +63,7 @@ const Home = () => {
           <div id='message' className={`${show ? "hidden md:flex flex-col md:h-[30rem] max-h-screen min-h-[60vh] md:w-[40%] w-[96%] mx-auto" : "flex flex-col md:h-[30rem] max-h-screen min-h-[60vh] md:w-[40%] w-[96%] mx-auto"}`}>
 
             {/* For New messages */}
-            <div className='h-[3rem] text-2xl bg-[#446E6B] text-white flex mb-1 items-center font-semibold rounded'>
+            <div className='h-[3rem] text-2xl bg-[#446E6B] text-white flex mb-1 items-center font-semibold rounded mt-6 md:mt-0'>
               <p className='pl-4'>Recently Chat</p>
             </div>
 

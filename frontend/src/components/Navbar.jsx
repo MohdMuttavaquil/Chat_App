@@ -13,9 +13,7 @@ const Navbar = () => {
 
   const logout = () => {
     if (socket.connected) {
-      console.log("dissconnected req send by user")
       socket.disconnect()
-      console.log("user disscionnected")
       setMessages("")
       sessionStorage.clear()
       setToken(false)
@@ -45,7 +43,7 @@ const Navbar = () => {
       <div className='flex h-[5rem] px-2 justify-between items-center z-50'>
 
         {/* logo */}
-        <div className='text-white font-semibold text-[2rem]'>LOGO</div>
+        <div className='text-[#ECFEFF] logo font-semibold text-[1.5rem]'>Msgly</div>
 
         <div className='flex items-center gap-5'>
 
