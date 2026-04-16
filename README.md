@@ -1,7 +1,6 @@
 # 💬 Msgly – Real-Time Chat Application
 
-## 🌐 Live Demo
-🚀 [Live Demo](https://chat-app-1-h1qb.onrender.com/)
+🚀 **Live Demo:** https://chat-app-1-h1qb.onrender.com/
 
 ## 📌 Description
 Msgly is a full-stack real-time chat application that enables users to communicate instantly with a modern and responsive user interface. The app supports real-time messaging as well as offline message handling, ensuring users never miss important conversations.
